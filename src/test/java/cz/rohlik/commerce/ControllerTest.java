@@ -1,5 +1,7 @@
 package cz.rohlik.commerce;
 
+import cz.rohlik.commerce.application.common.command.CommandBus;
+import cz.rohlik.commerce.application.common.query.QueryBus;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,30 +16,20 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import cz.rohlik.commerce.application.common.command.CommandBus;
-import cz.rohlik.commerce.application.common.query.QueryBus;
-
 /**
- * Base class for controller tests.
- * Use for testing REST endpoints in isolation.
- * MockMvc for simulating HTTP requests.
- * Command/Query buses are mocked.
- *
-
+ * Base class for controller tests. Use for testing REST endpoints in isolation. MockMvc for
+ * simulating HTTP requests. Command/Query buses are mocked.
  */
 @WebMvcTest
 @ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 public abstract class ControllerTest {
 
-    @Autowired
-    protected MockMvc mockMvc;
+    @Autowired protected MockMvc mockMvc;
 
-    @Mock
-    protected CommandBus commandBus;
+    @Mock protected CommandBus commandBus;
 
-    @Mock
-    protected QueryBus queryBus;
+    @Mock protected QueryBus queryBus;
 
     @TestConfiguration
     static class ControllerTestConfig {

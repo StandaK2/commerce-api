@@ -2,8 +2,8 @@ package cz.rohlik.commerce.infrastructure.exception.model;
 
 /**
  * Base API exception class for the Commerce API application.
-
- * All API exceptions are logged by the global exception handler.
+ *
+ * <p>All API exceptions are logged by the global exception handler.
  */
 public abstract class ApiException extends RuntimeException {
     private final Source source;

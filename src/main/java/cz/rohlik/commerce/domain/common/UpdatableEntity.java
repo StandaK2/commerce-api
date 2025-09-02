@@ -1,30 +1,22 @@
 package cz.rohlik.commerce.domain.common;
 
 import jakarta.persistence.*;
-
 import java.time.Instant;
-import java.util.UUID;
+import lombok.Getter;
 
 /**
- * Base entity class that tracks creation and update information.
- * Simplified for commerce API - no JPA auditing to keep it simple.
+ * Base entity class that tracks creation and update information. Simplified for commerce API - no
+ * JPA auditing to keep it simple.
  */
+@Getter
 @MappedSuperclass
 public abstract class UpdatableEntity extends CreatableEntity {
+    @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
     protected UpdatableEntity() {
         super();
         this.updatedAt = getCreatedAt();
-    }
-
-    protected UpdatableEntity(UUID id) {
-        super(id);
-        this.updatedAt = getCreatedAt();
-    }
-
-    public Instant getUpdatedAt() {
-        return updatedAt;
     }
 
     @PreUpdate
@@ -34,8 +26,8 @@ public abstract class UpdatableEntity extends CreatableEntity {
     }
 
     /**
-     * Hook method called before entity update.
-     * Override in subclasses to add custom pre-update logic.
+     * Hook method called before entity update. Override in subclasses to add custom pre-update
+     * logic.
      */
     protected void doOnUpdate() {
         // Default implementation does nothing

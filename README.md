@@ -37,8 +37,8 @@ src/main/java/cz/rohlik/commerce/
 ```bash
 ./gradlew build                    # Build + run all checks
 ./gradlew test                     # Run tests only
-./gradlew editorconfigCheck        # Check code formatting
-./gradlew editorconfigFormat       # Auto-fix formatting
+./gradlew spotlessCheck            # Check code formatting
+./gradlew spotlessApply            # Auto-fix formatting
 ```
 
 ### Access Points
@@ -58,7 +58,7 @@ src/main/java/cz/rohlik/commerce/
 - **Testing**: JUnit 5, Mockito, Spring Boot Test
 - **API Documentation**: OpenAPI 3 (Swagger)
 - **Build Tool**: Gradle 8
-- **Code Quality**: EditorConfig with automated checks
+- **Code Quality**: Spotless + EditorConfig with automated formatting
 
 ## 🎯 Code Quality
 
@@ -66,7 +66,7 @@ src/main/java/cz/rohlik/commerce/
 - **Indentation**: 4 spaces (Java), 2 spaces (YAML/JSON/SQL)
 - **Line Length**: 130 characters max
 - **Encoding**: UTF-8 with Unix line endings (LF)
-- **Imports**: No wildcards, organized by type
+- **Imports**: No wildcards, organized by type, unused imports removed
 - **Whitespace**: No trailing spaces, final newline required
 
 ## 🧪 Testing

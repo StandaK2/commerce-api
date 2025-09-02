@@ -1,14 +1,10 @@
 package cz.rohlik.commerce.domain.common;
 
 import jakarta.persistence.*;
-
 import java.util.Objects;
 import java.util.UUID;
 
-/**
- * Base entity class with UUID for most domain entities.
-
- */
+/** Base entity class with UUID for most domain entities. */
 @MappedSuperclass
 public abstract class Entity {
     @Id
@@ -40,5 +36,3 @@ public abstract class Entity {
         return Objects.hash(id);
     }
 }
-
-

@@ -1,9 +1,8 @@
 package cz.rohlik.commerce.application.common.command;
 
 /**
- * Base interface for all commands in the CQRS architecture.
- * Commands represent write operations that change system state.
-
+ * Base interface for all commands in the CQRS architecture. Commands represent write operations
+ * that change system state.
  *
  * @param <RESULT> The type of result returned by the command
  */

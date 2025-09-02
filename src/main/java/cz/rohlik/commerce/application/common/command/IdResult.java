@@ -4,7 +4,6 @@ import java.util.UUID;
 
 /**
  * Standard result type for commands that create or identify entities.
-
  *
  * @param id The UUID of the created or referenced entity
  */

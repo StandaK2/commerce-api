@@ -1,28 +1,18 @@
 package cz.rohlik.commerce.domain.common;
 
 import jakarta.persistence.*;
-
 import java.time.Instant;
-import java.util.UUID;
+import lombok.Getter;
 
-/**
- * Base entity class that supports soft deletion.
-
- */
+/** Base entity class that supports soft deletion. */
+@Getter
 @MappedSuperclass
 public abstract class DeletableEntity extends UpdatableEntity {
+    @Column(name = "deleted_at")
     private Instant deletedAt;
 
     protected DeletableEntity() {
         super();
-    }
-
-    protected DeletableEntity(UUID id) {
-        super(id);
-    }
-
-    public Instant getDeletedAt() {
-        return deletedAt;
     }
 
     public boolean isDeleted() {
@@ -33,9 +23,5 @@ public abstract class DeletableEntity extends UpdatableEntity {
         if (deletedAt == null) {
             deletedAt = Instant.now();
         }
-    }
-
-    public void reactivate() {
-        deletedAt = null;
     }
 }

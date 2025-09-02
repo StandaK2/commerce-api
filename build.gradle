@@ -2,7 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.5.5'
 	id 'io.spring.dependency-management' version '1.1.7'
-	id 'org.ec4j.editorconfig' version '0.1.0'
+	id 'com.diffplug.spotless' version '6.25.0'
 }
 
 group = 'cz.rohlik'
@@ -45,25 +45,32 @@ dependencies {
 	// Database Migration
 	implementation 'org.flywaydb:flyway-core'
 	
-	// Development tools - no Lombok for modern Java
+	// Development tools
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	
 	// Testing
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
-// EditorConfig configuration
-editorconfig {
-	// Include all source files
-	includes = ['**/*.java', '**/*.xml', '**/*.yml', '**/*.yaml', '**/*.properties', '**/*.sql', '**/*.md']
-	// Exclude generated and build files
-	excludes = ['**/build/**', '**/target/**', '**/.gradle/**', '**/*.class']
+// Spotless configuration
+spotless {
+	java {
+		target '**/*.java'
+		removeUnusedImports()
+		importOrder('java', 'javax', 'jakarta', '', 'cz.rohlik', '\\#')
+		googleJavaFormat('1.19.2').aosp()
+		trimTrailingWhitespace()
+		endWithNewline()
+	}
 }
 
-// Make check task depend on editorconfigCheck
 tasks.named('check') {
-	dependsOn 'editorconfigCheck'
+	dependsOn 'spotlessCheck'
 }
 
 tasks.named('test') {

@@ -3,10 +3,7 @@ package cz.rohlik.commerce.infrastructure.exception;
 import cz.rohlik.commerce.infrastructure.exception.model.ErrorCode;
 import cz.rohlik.commerce.infrastructure.exception.model.ErrorReason;
 
-/**
- * Standard error reason types for the Commerce API application.
-
- */
+/** Standard error reason types for the Commerce API application. */
 public final class ErrorReasonTypes {
 
     public static final ErrorReason PRODUCT_NOT_FOUND = CommerceErrorReason.PRODUCT_NOT_FOUND;

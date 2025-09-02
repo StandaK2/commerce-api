@@ -3,19 +3,18 @@ package cz.rohlik.commerce;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.util.UUID;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import java.util.UUID;
-
 /**
- * Utility methods for testing.
- * Provides MockMvc helpers and UUID generation for predictable test data.
+ * Utility methods for testing. Provides MockMvc helpers and UUID generation for predictable test
+ * data.
  */
 public final class TestUtils {
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
-            .registerModule(new JavaTimeModule());
+    private static final ObjectMapper OBJECT_MAPPER =
+            new ObjectMapper().registerModule(new JavaTimeModule());
 
     private TestUtils() {
         // Private constructor to prevent instantiation
@@ -29,8 +28,7 @@ public final class TestUtils {
      * @return The request builder with auth header
      */
     public static MockHttpServletRequestBuilder addBearerAuthHeader(
-            MockHttpServletRequestBuilder request,
-            String accessToken) {
+            MockHttpServletRequestBuilder request, String accessToken) {
         return request.header("Authorization", "Bearer " + accessToken);
     }
 
@@ -42,8 +40,7 @@ public final class TestUtils {
      * @return The request builder with Accept header
      */
     public static MockHttpServletRequestBuilder addAcceptHeader(
-            MockHttpServletRequestBuilder request,
-            String value) {
+            MockHttpServletRequestBuilder request, String value) {
         return request.header("Accept", value);
     }
 
@@ -55,11 +52,8 @@ public final class TestUtils {
      * @return The request builder with JSON content
      */
     public static MockHttpServletRequestBuilder addJsonContent(
-            MockHttpServletRequestBuilder request,
-            String content) {
-        return request
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
+            MockHttpServletRequestBuilder request, String content) {
+        return request.contentType(MediaType.APPLICATION_JSON).content(content);
     }
 
     /**
@@ -71,8 +65,7 @@ public final class TestUtils {
      * @throws RuntimeException if serialization fails
      */
     public static MockHttpServletRequestBuilder addJsonContent(
-            MockHttpServletRequestBuilder request,
-            Object object) {
+            MockHttpServletRequestBuilder request, Object object) {
         try {
             String json = OBJECT_MAPPER.writeValueAsString(object);
             return addJsonContent(request, json);
@@ -95,5 +88,4 @@ public final class TestUtils {
         String uuidString = String.format("00000000-0000-0000-0000-%012d", (long) number);
         return UUID.fromString(uuidString);
     }
-
 }

@@ -5,15 +5,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
- * Main application class for the Commerce API application.
- * Demonstrates hexagonal architecture with CQRS patterns for product and order management.
+ * Main application class for the Commerce API application. Demonstrates hexagonal architecture with
+ * CQRS patterns for product and order management.
  */
 @SpringBootApplication
 @EnableScheduling
 public class CommerceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CommerceApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(CommerceApplication.class, args);
+    }
 }

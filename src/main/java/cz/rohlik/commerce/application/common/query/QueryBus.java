@@ -1,9 +1,8 @@
 package cz.rohlik.commerce.application.common.query;
 
 /**
- * Query bus interface for dispatching queries to their handlers.
- * Provides a unified entry point for executing queries in the CQRS architecture.
-
+ * Query bus interface for dispatching queries to their handlers. Provides a unified entry point for
+ * executing queries in the CQRS architecture.
  */
 public interface QueryBus {
 
