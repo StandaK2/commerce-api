@@ -6,6 +6,7 @@ import cz.rohlik.commerce.application.module.product.command.CreateProductComman
 import cz.rohlik.commerce.domain.model.product.ProductCreateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Command handler for creating new products. Orchestrates product creation by delegating to domain
@@ -23,6 +24,7 @@ public class CreateProductCommandHandler implements CommandHandler<IdResult, Cre
     }
 
     @Override
+    @Transactional
     public IdResult handle(CreateProductCommand command) {
         var product =
                 productCreateService.create(

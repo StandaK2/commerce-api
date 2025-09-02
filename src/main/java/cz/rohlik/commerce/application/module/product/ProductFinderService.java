@@ -1,6 +1,9 @@
 package cz.rohlik.commerce.application.module.product;
 
+import cz.rohlik.commerce.domain.model.product.Product;
 import cz.rohlik.commerce.domain.model.product.ProductRepository;
+import cz.rohlik.commerce.domain.model.product.exception.ProductNotFoundException;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,4 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductFinderService {
 
     private final ProductRepository productRepository;
+
+    public Product findById(UUID productId) {
+        return productRepository
+                .findById(productId)
+                .orElseThrow(() -> new ProductNotFoundException(productId));
+    }
 }

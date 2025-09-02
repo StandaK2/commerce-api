@@ -11,6 +11,7 @@ import lombok.Getter;
 @Getter
 @MappedSuperclass
 public abstract class UpdatableEntity extends CreatableEntity {
+    @Version
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 

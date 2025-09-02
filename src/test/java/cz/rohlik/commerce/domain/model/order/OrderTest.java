@@ -81,10 +81,7 @@ class OrderTest {
     void shouldCheckExpirationCorrectly() {
         var order = new Order();
 
-        // Order should not be expired immediately with 30 minute window
         assertFalse(order.isExpired(30));
-
-        // Order should be expired with very short window
         assertTrue(order.isExpired(0));
     }
 }
