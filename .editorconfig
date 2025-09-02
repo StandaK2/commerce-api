@@ -1,0 +1,45 @@
+root = true
+
+[*]
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.java]
+indent_style = space
+indent_size = 4
+max_line_length = 130
+# Java-specific formatting
+ij_java_blank_lines_after_imports = 1
+ij_java_blank_lines_after_package = 1
+ij_java_blank_lines_around_class = 1
+ij_java_blank_lines_around_method = 1
+ij_java_class_count_to_use_import_on_demand = 9999
+ij_java_names_count_to_use_import_on_demand = 9999
+ij_java_imports_layout = *, |, javax.**, java.**, |, $*
+ij_java_use_single_class_imports = true
+ij_java_spaces_around_assignment_operators = true
+ij_java_spaces_around_logical_operators = true
+ij_java_spaces_around_equality_operators = true
+ij_java_spaces_around_relational_operators = true
+ij_java_spaces_around_additive_operators = true
+ij_java_spaces_around_multiplicative_operators = true
+
+[*.{xml,html,xhtml}]
+indent_size = 2
+
+[*.{yml,yaml}]
+indent_size = 2
+
+[*.{json}]
+indent_size = 2
+
+[*.{sql}]
+indent_size = 2
+
+[*.{md}]
+trim_trailing_whitespace = false
+
+[*.properties]
+indent_size = 4
