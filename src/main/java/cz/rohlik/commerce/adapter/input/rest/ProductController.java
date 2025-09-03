@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Tag(name = "Products")
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/products")
 @RequiredArgsConstructor
 public class ProductController {
 
@@ -46,15 +46,16 @@ public class ProductController {
         return commandBus.execute(request.toCommand());
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateProduct(@PathVariable UUID id, @RequestBody UpdateProductRequest request) {
-        commandBus.execute(request.toCommand(id));
+    public void updateProduct(
+            @PathVariable UUID productId, @RequestBody UpdateProductRequest request) {
+        commandBus.execute(request.toCommand(productId));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteProduct(@PathVariable UUID id) {
-        commandBus.execute(new DeleteProductCommand(id));
+    public void deleteProduct(@PathVariable UUID productId) {
+        commandBus.execute(new DeleteProductCommand(productId));
     }
 }

@@ -36,4 +36,8 @@ public class OrderItem extends CreatableEntity {
     public BigDecimal getSubtotal() {
         return unitPrice.multiply(BigDecimal.valueOf(quantity));
     }
+
+    public void updateQuantity(Integer newQuantity) {
+        this.quantity = newQuantity;
+    }
 }

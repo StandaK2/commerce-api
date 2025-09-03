@@ -33,4 +33,8 @@ public abstract class UpdatableEntity extends CreatableEntity {
     protected void doOnUpdate() {
         // Default implementation does nothing
     }
+
+    public void markAsModified() {
+        this.updatedAt = Instant.now();
+    }
 }

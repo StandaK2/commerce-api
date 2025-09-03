@@ -28,17 +28,17 @@ public class Order extends UpdatableEntity {
     private OrderStatus status = OrderStatus.CREATED;
 
     public void markAsPaid() {
-        validateOrderStatus(OrderStatus.CREATED);
+        validateIfModifiable();
         this.status = OrderStatus.PAID;
     }
 
     public void cancel() {
-        validateOrderStatus(OrderStatus.CREATED);
+        validateIfModifiable();
         this.status = OrderStatus.CANCELLED;
     }
 
     public void markAsExpired() {
-        validateOrderStatus(OrderStatus.CREATED);
+        validateIfModifiable();
         this.status = OrderStatus.EXPIRED;
     }
 
@@ -47,8 +47,8 @@ public class Order extends UpdatableEntity {
         return Instant.now().isAfter(expirationTime);
     }
 
-    private void validateOrderStatus(OrderStatus orderStatus) {
-        if (status != orderStatus) {
+    public void validateIfModifiable() {
+        if (status != OrderStatus.CREATED) {
             throw new InvalidOrderStateException(
                     getId(), String.format("Invalid order status %s for this operation", status));
         }

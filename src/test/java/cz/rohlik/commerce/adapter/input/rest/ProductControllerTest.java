@@ -52,7 +52,7 @@ class ProductControllerTest extends ControllerTest {
 
         when(queryBus.execute(any(GetProductsQuery.class))).thenReturn(mockResults);
 
-        mockMvc.perform(get("/products"))
+        mockMvc.perform(get("/api/products"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
                 .andExpect(jsonPath("$").isArray())
@@ -81,7 +81,7 @@ class ProductControllerTest extends ControllerTest {
 
         mockMvc.perform(
                         TestUtils.addJsonContent(
-                                post("/products"),
+                                post("/api/products"),
                                 """
                         {
                             "name": "Wireless Headphones",
@@ -107,7 +107,7 @@ class ProductControllerTest extends ControllerTest {
 
         mockMvc.perform(
                         TestUtils.addJsonContent(
-                                put("/products/" + productId),
+                                put("/api/products/" + productId),
                                 """
                         {
                             "name": "Updated Headphones",
@@ -129,7 +129,7 @@ class ProductControllerTest extends ControllerTest {
         when(commandBus.execute(any(DeleteProductCommand.class)))
                 .thenReturn(IdResult.of(productId));
 
-        mockMvc.perform(delete("/products/" + productId)).andExpect(status().isNoContent());
+        mockMvc.perform(delete("/api/products/" + productId)).andExpect(status().isNoContent());
 
         verify(commandBus).execute(new DeleteProductCommand(productId));
     }
