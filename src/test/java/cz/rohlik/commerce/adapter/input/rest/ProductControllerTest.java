@@ -3,6 +3,7 @@ package cz.rohlik.commerce.adapter.input.rest;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -11,6 +12,7 @@ import cz.rohlik.commerce.ControllerTest;
 import cz.rohlik.commerce.TestUtils;
 import cz.rohlik.commerce.application.common.command.IdResult;
 import cz.rohlik.commerce.application.module.product.command.CreateProductCommand;
+import cz.rohlik.commerce.application.module.product.command.DeleteProductCommand;
 import cz.rohlik.commerce.application.module.product.command.UpdateProductCommand;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
@@ -67,5 +69,16 @@ class ProductControllerTest extends ControllerTest {
                 .execute(
                         new UpdateProductCommand(
                                 productId, "Updated Headphones", new BigDecimal("129.99"), 75));
+    }
+
+    @Test
+    void shouldCorrectlyAccessDeleteProductEP() throws Exception {
+        var productId = TestUtils.createUuidFromNumber(1);
+        when(commandBus.execute(any(DeleteProductCommand.class)))
+                .thenReturn(IdResult.of(productId));
+
+        mockMvc.perform(delete("/products/" + productId)).andExpect(status().isNoContent());
+
+        verify(commandBus).execute(new DeleteProductCommand(productId));
     }
 }

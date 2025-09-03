@@ -20,4 +20,8 @@ public class ProductFinderService {
                 .findById(productId)
                 .orElseThrow(() -> new ProductNotFoundException(productId));
     }
+
+    public boolean hasActiveOrders(UUID productId) {
+        return productRepository.hasActiveOrders(productId);
+    }
 }

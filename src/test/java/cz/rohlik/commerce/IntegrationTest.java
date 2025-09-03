@@ -2,6 +2,7 @@ package cz.rohlik.commerce;
 
 import cz.rohlik.commerce.application.common.command.CommandBus;
 import cz.rohlik.commerce.application.common.query.QueryBus;
+import cz.rohlik.commerce.application.module.product.ProductFinderService;
 import cz.rohlik.commerce.domain.model.order.OrderCreateService;
 import cz.rohlik.commerce.domain.model.order.OrderRepository;
 import cz.rohlik.commerce.domain.model.orderitem.OrderItemCreateService;
@@ -35,14 +36,14 @@ public abstract class IntegrationTest {
 
     @Autowired protected CommandBus commandBus;
 
-    // Domain services
+    @Autowired protected ProductFinderService productFinderService;
+
     @Autowired protected ProductCreateService productCreateService;
 
     @Autowired protected OrderCreateService orderCreateService;
 
     @Autowired protected OrderItemCreateService orderItemCreateService;
 
-    // Domain repositories
     @Autowired protected ProductRepository productRepository;
 
     @Autowired protected OrderRepository orderRepository;
@@ -56,28 +57,23 @@ public abstract class IntegrationTest {
 
     @AfterEach
     void cleanUpIntegrationTest() {
-        // Clean database after each test
         cleanDatabase();
     }
 
     /** Cleans all tables except Flyway schema history. Optimized for an H2 database. */
     private void cleanDatabase() {
-        // Disable foreign key checks for cleanup
         jdbcTemplate.execute("SET REFERENTIAL_INTEGRITY FALSE");
 
-        // Get all table names except flyway_schema_history
         var tableNames =
                 jdbcTemplate.queryForList(
                         "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES "
                                 + "WHERE TABLE_SCHEMA = 'PUBLIC' AND TABLE_NAME != 'flyway_schema_history'",
                         String.class);
 
-        // Truncate all tables
         for (String tableName : tableNames) {
             jdbcTemplate.execute("TRUNCATE TABLE \"" + tableName + "\" RESTART IDENTITY");
         }
 
-        // Re-enable foreign key checks
         jdbcTemplate.execute("SET REFERENTIAL_INTEGRITY TRUE");
     }
 }

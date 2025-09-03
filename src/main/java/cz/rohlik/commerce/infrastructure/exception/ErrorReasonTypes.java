@@ -11,7 +11,8 @@ public final class ErrorReasonTypes {
     public static final ErrorReason INSUFFICIENT_STOCK = CommerceErrorReason.INSUFFICIENT_STOCK;
     public static final ErrorReason INVALID_ORDER_STATE = CommerceErrorReason.INVALID_ORDER_STATE;
     public static final ErrorReason ORDER_EXPIRED = CommerceErrorReason.ORDER_EXPIRED;
-    public static final ErrorReason PRODUCT_IN_USE = CommerceErrorReason.PRODUCT_IN_USE;
+    public static final ErrorReason PRODUCT_HAS_ACTIVE_ORDERS =
+            CommerceErrorReason.PRODUCT_HAS_ACTIVE_ORDERS;
 
     private ErrorReasonTypes() {
         // Utility class
@@ -23,7 +24,7 @@ public final class ErrorReasonTypes {
         INSUFFICIENT_STOCK,
         INVALID_ORDER_STATE,
         ORDER_EXPIRED,
-        PRODUCT_IN_USE;
+        PRODUCT_HAS_ACTIVE_ORDERS;
 
         @Override
         public ErrorCode getErrorCode() {
