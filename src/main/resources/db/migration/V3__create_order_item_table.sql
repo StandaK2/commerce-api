@@ -17,3 +17,4 @@ ALTER TABLE order_item ADD CONSTRAINT a133c3334a4484055033_fk
 
 CREATE INDEX b244d44459559155144_ix ON order_item (order_id);
 CREATE INDEX c355e555606602662255_ix ON order_item (product_id);
+CREATE UNIQUE INDEX "d466f66670770266633_ui" ON order_item (order_id, product_id);

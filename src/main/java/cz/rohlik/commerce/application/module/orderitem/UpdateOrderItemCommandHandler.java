@@ -37,7 +37,7 @@ public class UpdateOrderItemCommandHandler
             throw new OrderItemNotBelongsToOrderException(command.orderItemId(), command.orderId());
         }
 
-        var product = productFinderService.findById(orderItem.getProductId());
+        var product = productFinderService.findByIdForStockOperation(orderItem.getProductId());
         var order = orderFinderService.findById(orderItem.getOrderId());
         order.validateIfModifiable();
 

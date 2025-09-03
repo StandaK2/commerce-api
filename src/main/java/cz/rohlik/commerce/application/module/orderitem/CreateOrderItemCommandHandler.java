@@ -34,7 +34,7 @@ public class CreateOrderItemCommandHandler
         var order = orderFinderService.findById(command.orderId());
         order.validateIfModifiable();
 
-        var product = productFinderService.findById(command.productId());
+        var product = productFinderService.findByIdForStockOperation(command.productId());
         product.reserveStock(command.quantity());
 
         var orderItem =

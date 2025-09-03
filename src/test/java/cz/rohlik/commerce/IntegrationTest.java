@@ -2,6 +2,8 @@ package cz.rohlik.commerce;
 
 import cz.rohlik.commerce.application.common.command.CommandBus;
 import cz.rohlik.commerce.application.common.query.QueryBus;
+import cz.rohlik.commerce.application.module.order.OrderExpirationService;
+import cz.rohlik.commerce.application.module.order.port.output.PayOrder;
 import cz.rohlik.commerce.application.module.product.ProductFinderService;
 import cz.rohlik.commerce.domain.model.order.OrderCreateService;
 import cz.rohlik.commerce.domain.model.order.OrderRepository;
@@ -9,6 +11,7 @@ import cz.rohlik.commerce.domain.model.orderitem.OrderItemCreateService;
 import cz.rohlik.commerce.domain.model.orderitem.OrderItemRepository;
 import cz.rohlik.commerce.domain.model.product.ProductCreateService;
 import cz.rohlik.commerce.domain.model.product.ProductRepository;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -49,6 +53,12 @@ public abstract class IntegrationTest {
     @Autowired protected OrderRepository orderRepository;
 
     @Autowired protected OrderItemRepository orderItemRepository;
+
+    @Autowired protected OrderExpirationService orderExpirationService;
+
+    @Autowired protected EntityManager entityManager;
+
+    @MockitoBean protected PayOrder payOrder;
 
     @BeforeEach
     void setUpIntegrationTest() {

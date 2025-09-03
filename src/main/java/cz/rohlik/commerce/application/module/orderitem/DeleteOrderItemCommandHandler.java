@@ -4,7 +4,6 @@ import cz.rohlik.commerce.application.common.command.CommandHandler;
 import cz.rohlik.commerce.application.common.command.IdResult;
 import cz.rohlik.commerce.application.module.order.OrderFinderService;
 import cz.rohlik.commerce.application.module.orderitem.command.DeleteOrderItemCommand;
-import cz.rohlik.commerce.application.module.product.ProductFinderService;
 import cz.rohlik.commerce.domain.model.orderitem.exception.OrderItemNotBelongsToOrderException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ public class DeleteOrderItemCommandHandler
         implements CommandHandler<IdResult, DeleteOrderItemCommand> {
 
     private final OrderItemFinderService orderItemFinderService;
-    private final ProductFinderService productFinderService;
+    private final OrderItemService orderItemService;
     private final OrderFinderService orderFinderService;
 
     @Override
@@ -37,11 +36,10 @@ public class DeleteOrderItemCommandHandler
             throw new OrderItemNotBelongsToOrderException(command.orderItemId(), command.orderId());
         }
 
-        var product = productFinderService.findById(orderItem.getProductId());
         var order = orderFinderService.findById(orderItem.getOrderId());
 
         order.validateIfModifiable();
-        product.releaseStock(orderItem.getQuantity());
+        orderItemService.releaseStockForOrderItem(orderItem);
         orderItemFinderService.deleteById(command.orderItemId());
         order.markAsModified();
 

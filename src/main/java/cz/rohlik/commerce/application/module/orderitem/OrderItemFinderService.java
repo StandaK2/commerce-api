@@ -3,6 +3,7 @@ package cz.rohlik.commerce.application.module.orderitem;
 import cz.rohlik.commerce.domain.model.orderitem.OrderItem;
 import cz.rohlik.commerce.domain.model.orderitem.OrderItemRepository;
 import cz.rohlik.commerce.domain.model.orderitem.exception.OrderItemNotFoundException;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,10 @@ public class OrderItemFinderService {
         return orderItemRepository
                 .findById(orderItemId)
                 .orElseThrow(() -> new OrderItemNotFoundException(orderItemId));
+    }
+
+    public List<OrderItem> findAllByOrderId(UUID orderId) {
+        return orderItemRepository.findAllByOrderId(orderId);
     }
 
     @Transactional
