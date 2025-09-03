@@ -1,11 +1,12 @@
 package cz.rohlik.commerce;
 
 import cz.rohlik.commerce.domain.model.order.Order;
-import cz.rohlik.commerce.domain.model.order.OrderCreateService;
+import cz.rohlik.commerce.domain.model.order.OrderRepository;
+import cz.rohlik.commerce.domain.model.order.constant.OrderStatus;
 import cz.rohlik.commerce.domain.model.orderitem.OrderItem;
-import cz.rohlik.commerce.domain.model.orderitem.OrderItemCreateService;
+import cz.rohlik.commerce.domain.model.orderitem.OrderItemRepository;
 import cz.rohlik.commerce.domain.model.product.Product;
-import cz.rohlik.commerce.domain.model.product.ProductCreateService;
+import cz.rohlik.commerce.domain.model.product.ProductRepository;
 import java.math.BigDecimal;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -18,28 +19,59 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class IntegrationTestDataHelper {
 
-    private final ProductCreateService productCreateService;
-    private final OrderCreateService orderCreateService;
-    private final OrderItemCreateService orderItemCreateService;
+    private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
 
     public Product createDefaultProduct() {
-        return productCreateService.create("Test Product", new BigDecimal("19.99"), 100);
+        return createProduct("Test Product", new BigDecimal("19.99"), 100);
     }
 
     public Product createProduct(String name, BigDecimal price, Integer stockQuantity) {
-        return productCreateService.create(name, price, stockQuantity);
+        var product = new Product(name, price, stockQuantity);
+        return productRepository.save(product);
+    }
+
+    public Product createDeletedProduct(String name, BigDecimal price, Integer stockQuantity) {
+        var product = new Product(name, price, stockQuantity);
+        product.markDeleted();
+        return productRepository.save(product);
     }
 
     public Order createDefaultOrder() {
-        return orderCreateService.create();
+        return createOrder(OrderStatus.CREATED);
+    }
+
+    public Order createOrder(OrderStatus status) {
+        var order = new Order();
+        order = orderRepository.save(order); // Save first to get ID
+
+        // Apply status changes if needed
+        switch (status) {
+            case PAID -> {
+                order.markAsPaid();
+                order = orderRepository.save(order);
+            }
+            case CANCELLED -> {
+                order.cancel();
+                order = orderRepository.save(order);
+            }
+            case EXPIRED -> {
+                order.markAsExpired();
+                order = orderRepository.save(order);
+            }
+            case CREATED -> {} // Default status, no additional action needed
+        }
+        return order;
     }
 
     public OrderItem createDefaultOrderItem(UUID orderId, UUID productId) {
-        return orderItemCreateService.create(orderId, productId, 2, new BigDecimal("15.00"));
+        return createOrderItem(orderId, productId, 2, new BigDecimal("15.00"));
     }
 
     public OrderItem createOrderItem(
             UUID orderId, UUID productId, Integer quantity, BigDecimal unitPrice) {
-        return orderItemCreateService.create(orderId, productId, quantity, unitPrice);
+        var orderItem = new OrderItem(orderId, productId, quantity, unitPrice);
+        return orderItemRepository.save(orderItem);
     }
 }

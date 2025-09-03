@@ -6,9 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-/**
- * Repository interface for Product entity operations. Follows realtrek domain repository patterns.
- */
+/** Repository interface for Product entity operations. */
 @Repository
 public interface ProductRepository extends BaseRepository<Product> {
 
