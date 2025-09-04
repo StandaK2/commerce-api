@@ -7,6 +7,7 @@ import cz.rohlik.commerce.IntegrationTest;
 import cz.rohlik.commerce.TestUtils;
 import cz.rohlik.commerce.application.module.orderitem.command.CreateOrderItemCommand;
 import cz.rohlik.commerce.domain.model.order.exception.OrderNotFoundException;
+import cz.rohlik.commerce.domain.model.orderitem.exception.OrderItemAlreadyExistsException;
 import cz.rohlik.commerce.domain.model.product.exception.InsufficientStockException;
 import cz.rohlik.commerce.domain.model.product.exception.ProductNotFoundException;
 import java.math.BigDecimal;
@@ -82,5 +83,20 @@ class CreateOrderItemCommandHandlerIT extends IntegrationTest {
                                         new CreateOrderItemCommand(
                                                 order.getId(), product.getId(), 5)))
                 .isInstanceOf(InsufficientStockException.class);
+    }
+
+    @Test
+    void shouldFailWhenOrderItemAlreadyExists() {
+        var product = testDataHelper.createProduct("Gaming Mouse", new BigDecimal("79.99"), 25);
+        var order = testDataHelper.createDefaultOrder();
+
+        commandBus.execute(new CreateOrderItemCommand(order.getId(), product.getId(), 3));
+
+        assertThatThrownBy(
+                        () ->
+                                commandBus.execute(
+                                        new CreateOrderItemCommand(
+                                                order.getId(), product.getId(), 2)))
+                .isInstanceOf(OrderItemAlreadyExistsException.class);
     }
 }

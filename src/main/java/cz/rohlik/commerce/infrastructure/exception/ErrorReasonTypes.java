@@ -14,6 +14,8 @@ public final class ErrorReasonTypes {
     public static final ErrorReason PRODUCT_HAS_ACTIVE_ORDERS =
             CommerceErrorReason.PRODUCT_HAS_ACTIVE_ORDERS;
     public static final ErrorReason ORDER_ITEM_NOT_FOUND = CommerceErrorReason.ORDER_ITEM_NOT_FOUND;
+    public static final ErrorReason ORDER_ITEM_ALREADY_EXISTS =
+            CommerceErrorReason.ORDER_ITEM_ALREADY_EXISTS;
     public static final ErrorReason ORDER_ITEM_NOT_BELONGS_TO_ORDER =
             CommerceErrorReason.ORDER_ITEM_NOT_BELONGS_TO_ORDER;
 
@@ -29,6 +31,7 @@ public final class ErrorReasonTypes {
         ORDER_EXPIRED,
         PRODUCT_HAS_ACTIVE_ORDERS,
         ORDER_ITEM_NOT_FOUND,
+        ORDER_ITEM_ALREADY_EXISTS,
         ORDER_ITEM_NOT_BELONGS_TO_ORDER;
 
         @Override

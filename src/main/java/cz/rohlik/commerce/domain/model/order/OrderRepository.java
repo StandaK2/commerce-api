@@ -6,9 +6,7 @@ import java.time.Instant;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 
-/**
- * Repository interface for Order entity operations. Follows realtrek domain repository patterns.
- */
+/** Repository interface for Order entity operations. */
 @Repository
 public interface OrderRepository extends BaseRepository<Order> {
 
